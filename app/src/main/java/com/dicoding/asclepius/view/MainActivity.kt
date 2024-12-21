@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.PickVisualMedia()
     ){ uri ->
         if (uri != null){
+            currentImageUri = uri
             showImage()
         } else Log.d("Photo Picker", "No media selected")
     }
@@ -82,17 +83,14 @@ class MainActivity : AppCompatActivity() {
     private fun startGallery() {
         // TODO: Mendapatkan gambar dari Gallery.
         galleryResult.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-//        launcherGallery.launch(
-//            PickVisualMediaRequest(
-//                ActivityResultContracts.PickVisualMedia.ImageOnly
-//            )
-//        )
     }
 
     private fun showImage() {
         // TODO: Menampilkan gambar sesuai Gallery yang dipilih.
-        currentImageUri?.let {
-            binding.previewImageView.setImageURI(it)
+        currentImageUri?.let { uri ->
+            binding.previewImageView.setImageURI(uri)
+        } ?: run{
+            Log.d("Photo Picker", "No media selected")
         }
     }
 
@@ -135,18 +133,5 @@ class MainActivity : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (resultCode == RESULT_OK && requestCode == CROP_REQUEST){
-//            currentImageUri = UCrop.getOutput(data!!)
-//            showImage()
-//        }
-//    }
-
-//    companion object{
-//        private const val CROP_REQUEST = 101
-//    }
 
 }
