@@ -6,8 +6,9 @@
     <string name="analyze">Analyze</string>
     <string name="result">Hasil Analisis %s</string>
 
-    <string name="confidence">Confidence: %.2f%%</string>
+    <string name="confidence">Confidence Score: %.2f%%</string>
     <string name="inference_time">Inference Time: %d ms</string>
 
     <string name="image_error">Image Error</string>
+    <string name="confidence_score">Confidence Score</string>
 </resources>

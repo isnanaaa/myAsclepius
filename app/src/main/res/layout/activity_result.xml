@@ -24,5 +24,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="@string/result" />
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/confidence_score" />
     </LinearLayout>
 </ScrollView>

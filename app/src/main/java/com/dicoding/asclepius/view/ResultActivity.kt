@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.net.toUri
 import com.dicoding.asclepius.R
+import com.dicoding.asclepius.utils.formatToString
 import com.dicoding.asclepius.databinding.ActivityResultBinding
 
 class ResultActivity : AppCompatActivity() {
@@ -12,7 +13,6 @@ class ResultActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_result)
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -29,6 +29,7 @@ class ResultActivity : AppCompatActivity() {
 
             resultImage.setImageURI(imageUri.toUri())
             resultText.text = resources.getString(R.string.result, result)
+            score.text = confidenceScore.formatToString().plus("%")
         }
     }
 

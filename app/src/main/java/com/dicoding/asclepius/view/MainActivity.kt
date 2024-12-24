@@ -15,6 +15,7 @@ import com.dicoding.asclepius.databinding.ActivityMainBinding
 import com.dicoding.asclepius.helper.ImageClassifierHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -58,28 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private val launcherGallery = registerForActivityResult(
-//        ActivityResultContracts.PickVisualMedia()
-//    ) { uri: Uri? ->
-//        // TODO: Mendapatkan gambar dari Gallery.
-//        if (
-//            uri != null
-//        ){
-//            currentImageUri = uri
-//            showImage()
-//        } else{
-//            Toast.makeText(this, R.string.image_error, Toast.LENGTH_SHORT).show()
-//        }
-//
-//    }
-
-//    private fun initAction(){
-//        binding?.apply {
-//            galleryButton.setOnClickListener {startGallery()}
-//            analyzeButton.setOnClickListener{moveToResult()}
-//        }
-//    }
-
     private fun startGallery() {
         // TODO: Mendapatkan gambar dari Gallery.
         galleryResult.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -98,8 +77,15 @@ class MainActivity : AppCompatActivity() {
         // TODO: Menganalisa gambar yang berhasil ditampilkan.
         if (currentImageUri != null){
             setLoading(true)
-            lifecycleScope.launch(Dispatchers.Default){
-                imageClassifierHelper.classifyStaticImage(currentImageUri!!)
+            lifecycleScope.launch(Dispatchers.IO){
+                try {
+                    imageClassifierHelper.classifyStaticImage(currentImageUri!!)
+                } catch (e: Exception){
+                    withContext(Dispatchers.Main){
+                        showToast(getString(R.string.image_error))
+                        setLoading(false)
+                    }
+                }
             }
         } else {
             showToast(getString(R.string.image_error))
@@ -131,7 +117,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        runOnUiThread{
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

@@ -47,7 +47,6 @@ class ImageClassifierHelper(
         } catch (e:Exception){
             onError.invoke(context.getString(R.string.image_error))
             Log.e("Classification", e.message.toString())
-//            classifierListener?.onError(e.toString())
         }
     }
 
@@ -61,8 +60,6 @@ class ImageClassifierHelper(
         } else {
             MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
         }.copy(Bitmap.Config.ARGB_8888,true)
-
-//        bitmap = bitmap.copy(Bitmap.Config.ARGB_8888,true)
 
         val tensorImage = TensorImage(DataType.UINT8)
         tensorImage.load(bitmap)

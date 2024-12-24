@@ -37,6 +37,7 @@ android {
         viewBinding = true
         //noinspection DataBindingWithoutKapt
         dataBinding = true
+        mlModelBinding = true
     }
 }
 
